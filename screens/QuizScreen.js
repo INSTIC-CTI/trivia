@@ -14,6 +14,8 @@ export default class QuizScreen extends Component {
     currentQuestion: 0,
     isLoaded: false,
     questions: [],
+    options: [],
+    score: 0,
   };
 
   componentDidMount() {
@@ -39,6 +41,17 @@ export default class QuizScreen extends Component {
       })
       .catch((err) => console.error(err));
   }
+
+  checkAnswer(selectedAnswer) {
+    if (this.state.correctAnswer === selectedAnswer) {
+      console.log("C'est la bonne réponse");
+      const score = this.state.score;
+      score += 1;
+      this.setState({ score });
+    } else {
+      console.log("Ce n'est pas bon !");
+    }
+  }
   render() {
     if (this.state.isLoaded) {
       return (
@@ -49,22 +62,42 @@ export default class QuizScreen extends Component {
             </Text>
           </View>
           <View style={styles.answerContainer}>
-            <TouchableOpacity onPress={() => {}} style={styles.button}>
+            <TouchableOpacity
+              onPress={() => {
+                this.checkAnswer(this.state.options[0]);
+              }}
+              style={styles.button}
+            >
               <Text style={styles.answerText}>{this.state.options[0]}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.answerContainer}>
-            <TouchableOpacity onPress={() => {}} style={styles.button}>
+            <TouchableOpacity
+              onPress={() => {
+                this.checkAnswer(this.state.options[1]);
+              }}
+              style={styles.button}
+            >
               <Text style={styles.answerText}>{this.state.options[1]}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.answerContainer}>
-            <TouchableOpacity onPress={() => {}} style={styles.button}>
+            <TouchableOpacity
+              onPress={() => {
+                this.checkAnswer(this.state.options[2]);
+              }}
+              style={styles.button}
+            >
               <Text style={styles.answerText}>{this.state.options[2]}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.answerContainer}>
-            <TouchableOpacity onPress={() => {}} style={styles.button}>
+            <TouchableOpacity
+              onPress={() => {
+                this.checkAnswer(this.state.options[3]);
+              }}
+              style={styles.button}
+            >
               <Text style={styles.answerText}>{this.state.options[3]}</Text>
             </TouchableOpacity>
           </View>
