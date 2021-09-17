@@ -15,6 +15,7 @@ export default class QuizScreen extends Component {
     isLoaded: false,
     questions: [],
     options: [],
+    correctAnswer: "",
     score: 0,
   };
 
@@ -50,6 +51,27 @@ export default class QuizScreen extends Component {
       this.setState({ score });
     } else {
       console.log("Ce n'est pas bon !");
+    }
+    if (currentQuestion <= this.state.questions.length) {
+      
+      const currentQuestion = this.state.currentQuestion;
+      currentQuestion += 1;
+
+      const options =
+        this.state.questions[this.state.currentQuestion].incorrect_answers;
+      const correctAnswer =
+        this.state.questions[this.state.currentQuestion].correct_answer;
+
+      options.push(correctAnswer);
+      this.setState({
+        currentQuestion,
+        options,
+        correctAnswer,
+      });
+    } else {
+      this.props.navigation.navigate("ResultScreen",{
+        score:this.state.score
+      })
     }
   }
   render() {
