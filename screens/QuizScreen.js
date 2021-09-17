@@ -23,16 +23,24 @@ export default class QuizScreen extends Component {
     return fetch(quizApi)
       .then((data) => {
         data.json().then((dataJson) => {
+          const options =
+            dataJson.results[this.state.currentQuestion].incorrect_answers;
+          const correctAnswer =
+            dataJson.results[this.state.currentQuestion].correct_answer;
+
+          options.push(correctAnswer);
+          console.log(options);
           this.setState({
             isLoaded: true,
-            questions: dataJson.results
-          })
-        })
+            questions: dataJson.results,
+            options: options,
+          });
+        });
       })
       .catch((err) => console.error(err));
   }
   render() {
-    if(this.state.isLoaded) {
+    if (this.state.isLoaded) {
       return (
         <ScrollView style={styles.container}>
           <View style={styles.questionContainer}>
@@ -42,32 +50,32 @@ export default class QuizScreen extends Component {
           </View>
           <View style={styles.answerContainer}>
             <TouchableOpacity onPress={() => {}} style={styles.button}>
-              <Text style={styles.answerText}>Response</Text>
+              <Text style={styles.answerText}>{this.state.options[0]}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.answerContainer}>
             <TouchableOpacity onPress={() => {}} style={styles.button}>
-              <Text style={styles.answerText}>Response</Text>
+              <Text style={styles.answerText}>{this.state.options[1]}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.answerContainer}>
             <TouchableOpacity onPress={() => {}} style={styles.button}>
-              <Text style={styles.answerText}>Response</Text>
+              <Text style={styles.answerText}>{this.state.options[2]}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.answerContainer}>
             <TouchableOpacity onPress={() => {}} style={styles.button}>
-              <Text style={styles.answerText}>Response</Text>
+              <Text style={styles.answerText}>{this.state.options[3]}</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
-      )
+      );
     } else {
       return (
-      <View>
-        <Text>DOOMED !!!</Text>
-      </View>
-      )
+        <View>
+          <Text>DOOMED !!!</Text>
+        </View>
+      );
     }
   }
 }
