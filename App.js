@@ -1,34 +1,25 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import HomeScreen from './screens/HomeScreen';
+import QuizScreen from './screens/QuizScreen';
+import ResultScreen from './screens/ResultScreen';
+
+const Stack = createNativeStackNavigator();
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-      style={styles.button}
-      onPress={()=>{}}
-      >
-        <Text style={styles.buttonText}>Quiz</Text>
-      </TouchableOpacity>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Quiz" component={QuizScreen} />
+        <Stack.Screen name="Result" component={ResultScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#301b75',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button:{
-    backgroundColor: '#db6f16',
-    paddingHorizontal:20,
-    paddingVertical:10,
-    borderRadius:10
-  },
-  buttonText:{
-    color: '#fff',
-    fontSize:18
-  }
-});
+
