@@ -1,34 +1,86 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { Component } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
-export default function QuizScreen() {
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity
-      style={styles.button}
-      onPress={()=>{}}
-      >
-        <Text style={styles.buttonText}>Quiz</Text>
-      </TouchableOpacity>
-    </View>
-  );
+const quizApi = "https://opentdb.com/api.php?amount=10";
+
+export default class QuizScreen extends Component {
+  componentDidMount() {
+    this.fetchQuestions();
+  }
+  async fetchQuestions() {
+    return fetch(quizApi)
+      .then((data) => {
+        data.json().then((dataJson) => console.log(dataJson));
+      })
+      .catch((err) => console.error(err));
+  }
+  render() {
+    return (
+      <ScrollView style={styles.container}>
+        <View style={styles.questionContainer}>
+          <Text style={styles.question}>Question</Text>
+        </View>
+        <View style={styles.answerContainer}>
+          <TouchableOpacity onPress={() => {}} style={styles.button}>
+            <Text style={styles.answerText}>Response</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.answerContainer}>
+          <TouchableOpacity onPress={() => {}} style={styles.button}>
+            <Text style={styles.answerText}>Response</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.answerContainer}>
+          <TouchableOpacity onPress={() => {}} style={styles.button}>
+            <Text style={styles.answerText}>Response</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.answerContainer}>
+          <TouchableOpacity onPress={() => {}} style={styles.button}>
+            <Text style={styles.answerText}>Response</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#301b75',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#301b75",
   },
-  button:{
-    backgroundColor: '#db6f16',
-    paddingHorizontal:20,
-    paddingVertical:10,
-    borderRadius:10
+  button: {
+    backgroundColor: "#602bc2",
+    padding: 20,
+    marginVertical: 10,
+    borderRadius:8
   },
-  buttonText:{
-    color: '#fff',
-    fontSize:18
+  buttonText: {
+    color: "#fff",
+    fontSize: 18,
+  },
+  questionContainer: {
+    marginHorizontal: 30,
+    marginVertical: 20,
+  },
+  question: {
+    fontSize: 50,
+    color: "#fff",
+    textAlign: "center",
+  },
+  answerText: {
+    fontSize: 18,
+    color: "#fff",
+  },
+  answerContainer: {
+    marginHorizontal:20,
+    marginVertical:10
   }
 });
