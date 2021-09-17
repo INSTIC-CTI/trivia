@@ -10,44 +10,65 @@ import {
 const quizApi = "https://opentdb.com/api.php?amount=10";
 
 export default class QuizScreen extends Component {
+  state = {
+    currentQuestion: 0,
+    isLoaded: false,
+    questions: [],
+  };
+
   componentDidMount() {
     this.fetchQuestions();
   }
   async fetchQuestions() {
     return fetch(quizApi)
       .then((data) => {
-        data.json().then((dataJson) => console.log(dataJson));
+        data.json().then((dataJson) => {
+          this.setState({
+            isLoaded: true,
+            questions: dataJson.results
+          })
+        })
       })
       .catch((err) => console.error(err));
   }
   render() {
-    return (
-      <ScrollView style={styles.container}>
-        <View style={styles.questionContainer}>
-          <Text style={styles.question}>Question</Text>
-        </View>
-        <View style={styles.answerContainer}>
-          <TouchableOpacity onPress={() => {}} style={styles.button}>
-            <Text style={styles.answerText}>Response</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.answerContainer}>
-          <TouchableOpacity onPress={() => {}} style={styles.button}>
-            <Text style={styles.answerText}>Response</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.answerContainer}>
-          <TouchableOpacity onPress={() => {}} style={styles.button}>
-            <Text style={styles.answerText}>Response</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.answerContainer}>
-          <TouchableOpacity onPress={() => {}} style={styles.button}>
-            <Text style={styles.answerText}>Response</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    );
+    if(this.state.isLoaded) {
+      return (
+        <ScrollView style={styles.container}>
+          <View style={styles.questionContainer}>
+            <Text style={styles.question}>
+              Q. {this.state.questions[this.state.currentQuestion].question}
+            </Text>
+          </View>
+          <View style={styles.answerContainer}>
+            <TouchableOpacity onPress={() => {}} style={styles.button}>
+              <Text style={styles.answerText}>Response</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.answerContainer}>
+            <TouchableOpacity onPress={() => {}} style={styles.button}>
+              <Text style={styles.answerText}>Response</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.answerContainer}>
+            <TouchableOpacity onPress={() => {}} style={styles.button}>
+              <Text style={styles.answerText}>Response</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.answerContainer}>
+            <TouchableOpacity onPress={() => {}} style={styles.button}>
+              <Text style={styles.answerText}>Response</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      )
+    } else {
+      return (
+      <View>
+        <Text>DOOMED !!!</Text>
+      </View>
+      )
+    }
   }
 }
 
@@ -60,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#602bc2",
     padding: 20,
     marginVertical: 10,
-    borderRadius:8
+    borderRadius: 8,
   },
   buttonText: {
     color: "#fff",
@@ -80,7 +101,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   answerContainer: {
-    marginHorizontal:20,
-    marginVertical:10
-  }
+    marginHorizontal: 20,
+    marginVertical: 10,
+  },
 });
